@@ -5,6 +5,7 @@ import java.util.Random;
 public class Producer implements Runnable {
     private Drop drop;
     private int id;
+    private static int thingToProduce = 0;
 
     public Producer(Drop drop, int id) {
         this.id = id;
@@ -12,13 +13,18 @@ public class Producer implements Runnable {
         this.drop.addProd();
     }
 
+    private synchronized int incrementThingToProduce(){
+        return this.thingToProduce++;
+    }
+
     public void run() {
 
         Random random = new Random();
 
         for (int i = 0; i < 250; i++) {
-            System.out.format("Producer #%d put: %d%n", this.id, i);
-            drop.put(i);
+            int tmp = this.incrementThingToProduce();
+            System.out.format("Producer #%d put: %d%n", this.id, tmp);
+            drop.put(tmp);
             try {
                 Thread.sleep(random.nextInt(10));
             } catch (InterruptedException e) {}
