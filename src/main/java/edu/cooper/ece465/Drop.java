@@ -35,7 +35,7 @@ public class Drop {
 
     public synchronized void rmProd(){
         this.producerCount--;
-        // notifyAll();
+        notifyAll();
     }
 
     public synchronized Integer take() {
