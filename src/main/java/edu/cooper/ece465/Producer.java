@@ -9,6 +9,7 @@ public class Producer implements Runnable {
     public Producer(Drop drop, int id) {
         this.id = id;
         this.drop = drop;
+        this.drop.addProd();
     }
 
     public void run() {
@@ -22,6 +23,8 @@ public class Producer implements Runnable {
                 Thread.sleep(random.nextInt(10));
             } catch (InterruptedException e) {}
         }
-        drop.put(-1);
+        drop.rmProd();
+
+        System.out.format("Producer #%d Died\n", this.id);
     }
 }

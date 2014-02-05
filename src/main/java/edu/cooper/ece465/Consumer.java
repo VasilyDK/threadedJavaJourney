@@ -9,6 +9,7 @@ public class Consumer implements Runnable {
     public Consumer(Drop drop, int id) {
         this.id = id;
         this.drop = drop;
+        this.drop.addCons();
     }
 
     public void run() {
@@ -19,5 +20,8 @@ public class Consumer implements Runnable {
                 Thread.sleep(random.nextInt(10));
             } catch (InterruptedException e) {}
         }
+
+        System.out.format("Consumer #%d Died\n", this.id);
+
     }
 }

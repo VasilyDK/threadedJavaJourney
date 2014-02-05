@@ -7,6 +7,8 @@ public class Drop {
     // Message sent from producer
     // to consumer.
     private Queue<Integer> messages;
+    private int consumerCount = 0;
+    private int producerCount = 0;
     // True if consumer should wait
     // for producer to send message,
     // false if producer should wait for
@@ -16,10 +18,30 @@ public class Drop {
         this.messages = new LinkedList<Integer>();
     }
 
+    public synchronized void addCons(){
+        this.consumerCount++;
+        // notifyAll();
+    }
+
+    public synchronized void addProd(){
+        this.producerCount++;
+        // notifyAll();
+    }
+
+    public synchronized void rmCons(){
+        this.consumerCount--;
+        // notifyAll();
+    }
+
+    public synchronized void rmProd(){
+        this.producerCount--;
+        // notifyAll();
+    }
+
     public synchronized Integer take() {
         // Wait until message is
         // available.
-        while (messages.peek() == null) {
+        while (messages.peek() == null && this.producerCount != 0) {
             try {
                 wait();
             } catch (InterruptedException e) {}
@@ -27,10 +49,12 @@ public class Drop {
         // Notify producer that
         // status has changed.
         notifyAll();
-        if (messages.peek() == -1){
-            return messages.peek();
+
+        if (this.producerCount == 0 && messages.size() == 0 ){
+            return -1;
+        } else {
+            return messages.remove();            
         }
-        return messages.remove();
     }
 
     public synchronized void put(Integer message) {
