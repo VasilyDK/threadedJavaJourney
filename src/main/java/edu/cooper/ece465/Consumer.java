@@ -16,7 +16,7 @@ public class Consumer implements Runnable {
              message = drop.take()) {
             System.out.format("MESSAGE RECEIVED: %s%n", message);
             try {
-                Thread.sleep(random.nextInt(5000));
+                Thread.sleep(random.nextInt(2000));
             } catch (InterruptedException e) {}
         }
     }
