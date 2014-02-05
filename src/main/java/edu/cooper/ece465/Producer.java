@@ -16,7 +16,7 @@ public class Producer implements Runnable {
 
         Random random = new Random();
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 250; i++) {
             System.out.format("Producer #%d put: %d%n", this.id, i);
             drop.put(i);
             try {
