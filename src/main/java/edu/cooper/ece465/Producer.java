@@ -4,28 +4,24 @@ import java.util.Random;
 
 public class Producer implements Runnable {
     private Drop drop;
+    private int id;
 
-    public Producer(Drop drop) {
+    public Producer(Drop drop, int id) {
+        this.id = id;
         this.drop = drop;
     }
 
     public void run() {
-        String importantInfo[] = {
-            "Mares eat oats",
-            "Does eat oats",
-            "Little lambs eat ivy",
-            "A kid will eat ivy too"
-        };
+
         Random random = new Random();
 
-        for (int i = 0;
-             i < importantInfo.length;
-             i++) {
-            drop.put(importantInfo[i]);
+        for (int i = 0; i < 500; i++) {
+            System.out.format("Producer #%d put: %d%n", this.id, i);
+            drop.put(i);
             try {
-                Thread.sleep(random.nextInt(2000));
+                Thread.sleep(random.nextInt(10));
             } catch (InterruptedException e) {}
         }
-        drop.put("DONE");
+        drop.put(-1);
     }
 }
