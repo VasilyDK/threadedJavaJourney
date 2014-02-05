@@ -27,6 +27,9 @@ public class Drop {
         // Notify producer that
         // status has changed.
         notifyAll();
+        if (messages.peek() == "DONE"){
+            return messages.peek();
+        }
         return messages.remove();
     }
 
