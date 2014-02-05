@@ -1,43 +1,45 @@
 package edu.cooper.ece465;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 public class Drop {
     // Message sent from producer
     // to consumer.
-    private String message;
+    private Queue<String> messages;
     // True if consumer should wait
     // for producer to send message,
     // false if producer should wait for
     // consumer to retrieve message.
-    private boolean empty = true;
+
+    public Drop(){
+        this.messages = new LinkedList<String>();
+    }
 
     public synchronized String take() {
         // Wait until message is
         // available.
-        while (empty) {
+        while (messages.peek() == null) {
             try {
                 wait();
             } catch (InterruptedException e) {}
         }
-        // Toggle status.
-        empty = true;
         // Notify producer that
         // status has changed.
         notifyAll();
-        return message;
+        return messages.remove();
     }
 
     public synchronized void put(String message) {
         // Wait until message has
         // been retrieved.
-        while (!empty) {
+        while (messages.peek() != null) {
             try {
                 wait();
             } catch (InterruptedException e) {}
         }
-        // Toggle status.
-        empty = false;
         // Store message.
-        this.message = message;
+        this.messages.add(message);
         // Notify consumer that status
         // has changed.
         notifyAll();
