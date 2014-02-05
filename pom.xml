@@ -20,7 +20,7 @@
   <repositories>
       <repository>
         <id>mvnrepository</id>
-		<url>http://mvnrepository.com</url>
+        <url>http://mvnrepository.com</url>
       </repository>
     </repositories>
 
@@ -48,8 +48,8 @@
                   <dependency>hadoop-core</dependency>
                 </classpath>
 -->
-			       <argument>edu.cooper.ece465.javaJourney</argument>
-			       <argument>4393755</argument>
+                   <argument>edu.cooper.ece465.ProducerConsumerExample</argument>
+                   <argument>4393755</argument>
           </arguments>
         </configuration>
       </plugin>
